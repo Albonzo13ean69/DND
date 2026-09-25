@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Dungeons & Dragons",
+  "short_name": "D&D",
+  "description": "A tabletop campaign companion for your D&D game.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
+  "icons": [
+    {
+      "src": "dnd-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
