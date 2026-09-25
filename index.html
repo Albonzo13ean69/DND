@@ -8,6 +8,9 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="dnd-icon.svg">
 <meta name="theme-color" content="#08090c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#08090c;--panel:#111319;--panel2:#171923;--line:#302b33;--text:#f2ece5;--muted:#9e96a0;--red:#c83246;--red2:#ed6272;--gold:#d8b469;--green:#4dcc7e}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:Georgia,serif}body{overflow:hidden}.app{position:fixed;inset:0;width:100%;height:100%;min-height:100dvh;overflow:hidden}
@@ -624,6 +627,7 @@ body.player-window.player-boss-active #presentation > .player-dashboard-grid{dis
 <style id="opaque-phone-join">#phoneJoin,#characterPicker{background:#050507!important}#characterPicker{z-index:200003!important}#supabaseRoomModal{z-index:200004!important}body.player-window.join-flow{background:#050507!important}body.player-window.join-flow #presentation{display:none!important}</style>
 <style id="hide-player-map">body.player-window #presentation .player-map,body.player-window #presentation #playerMapView{display:none!important}body.player-window #presentation .player-dashboard-grid{display:grid!important}body.player-window #presentation.player-map-open .player-dashboard-grid{display:grid!important}body.player-window #presentation.player-map-open #playerMapView{display:none!important}#characterChoices .character-choice:disabled{opacity:.45;cursor:not-allowed;border-color:#49313a}#characterChoices .character-choice:disabled:hover{background:#0b0d12;border-color:#49313a}</style>
 <style id="phone-player-guard">body.player-window .app,body.player-window .battle-page{display:none!important;pointer-events:none!important}body.player-window #presentationBossOverlay,body.player-window #presentationBossOverlay *{pointer-events:none!important}</style>
+<style id="app-notice-styles">.app-notice{position:fixed;left:50%;bottom:22px;z-index:1000000;max-width:min(420px,calc(100vw - 32px));padding:11px 16px;border:1px solid #493941;border-radius:10px;background:#17151c;color:#f8f3f5;box-shadow:0 12px 40px #0009;font:14px/1.4 Arial,sans-serif;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:opacity .18s ease,transform .18s ease}.app-notice.visible{opacity:1;transform:translate(-50%,0)}.app-confirm-backdrop{position:fixed;inset:0;z-index:1000001;display:none;align-items:center;justify-content:center;padding:16px;background:#0009;font-family:Arial,sans-serif}.app-confirm-backdrop.visible{display:flex}.app-confirm-card{width:min(360px,calc(100vw - 32px));padding:18px;border:1px solid #493941;border-radius:13px;background:#14131a;color:#f8f3f5;box-shadow:0 18px 70px #000b}.app-confirm-card p{margin:0 0 18px;line-height:1.5}.app-confirm-actions{display:flex;justify-content:flex-end;gap:8px}.app-confirm-actions button{border:1px solid #493941;border-radius:7px;padding:8px 13px;background:#211d25;color:#fff;cursor:pointer}.app-confirm-actions .app-confirm-ok{background:#55202f;border-color:#814052}</style>
 <style id="phone-damage-feedback">
 .damage-vignette{position:fixed;inset:0;z-index:100010;pointer-events:none;opacity:0;background:linear-gradient(90deg,rgba(255,18,38,.55),rgba(255,18,38,0) 17%,rgba(255,18,38,0) 83%,rgba(255,18,38,.55))}
 .damage-vignette.show{animation:damageSides .9s ease-out both}
@@ -635,6 +639,10 @@ body.player-window.player-boss-active #presentation > .player-dashboard-grid{dis
 @keyframes damageCaption{0%{opacity:0;transform:translate(-50%,10px)}14%,75%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-12px)}}
 @keyframes damagePop{0%{opacity:0;transform:translate(-50%,18px) scale(.7)}15%{opacity:1;transform:translate(-50%,0) scale(1.08)}30%{transform:translate(-50%,0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-35px) scale(.96)}}
 </style>
+<style id="written-lore-styles">
+.written-item-editor{display:none;margin-top:12px;padding:14px;border:1px solid #72573a;border-radius:10px;background:#17130f}.written-item-editor.show{display:block}.written-editor-title{font:700 10px Arial;letter-spacing:2px;color:#dfc58f;margin-bottom:8px}.written-item-editor textarea{display:block;width:100%;min-height:120px;resize:vertical;padding:12px;border:1px solid #836b4c;border-radius:7px;background:#eadbb9;color:#352719;font:17px/1.55 'IM Fell English',Georgia,serif}.written-paper-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:9px 0}.written-paper-tools label{font:11px Arial;color:#cfc1a6}.written-paper-tools input[type=color]{width:38px;height:30px;padding:2px;background:#eadbb9;border:1px solid #836b4c;border-radius:5px}.written-paper{position:relative;isolation:isolate;overflow:hidden;border:1px solid #a68a5a;border-radius:8px;background:radial-gradient(ellipse at 22% 18%,#f3e5c6 0%,transparent 45%),radial-gradient(ellipse at 82% 85%,#d2b989 0%,transparent 52%),linear-gradient(135deg,#ead8b1,#dfc99a);box-shadow:inset 0 0 30px #8a673533,0 8px 25px #0008;color:#352719}.written-item-editor .written-paper{max-width:900px}.written-paper-canvas{display:block;width:100%;height:auto;aspect-ratio:900/560;touch-action:none;cursor:crosshair}.written-paper-blank{background-color:transparent}.written-paper-clear{border:1px solid #795e3d;background:#2a2116;color:#f3e5c6;border-radius:6px;padding:7px 10px;cursor:pointer;font:11px Arial}.written-paper-note{font:10px Arial;color:#a99b83}.written-item-label{display:inline-flex;margin-top:5px;padding:3px 7px;border:1px solid #9f7c45;border-radius:999px;color:#d9bd80;font:700 9px Arial;letter-spacing:1px}.player-inventory-card.written-item{cursor:pointer;border-color:#55432c}.player-inventory-card.written-item:hover{border-color:#c09a56;transform:translateY(-1px)}.written-read-button{margin-top:7px;border:1px solid #705637;background:#211a12;color:#efdbad;border-radius:6px;padding:6px 9px;cursor:pointer;font:11px Arial}.written-read-modal{position:fixed;inset:0;z-index:300000;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.82);font-family:Arial,sans-serif}.written-read-modal.show{display:flex}.written-read-card{position:relative;width:min(520px,92vw);max-height:80vh;overflow:auto;padding:18px;border:1px solid #735d3d;border-radius:15px;background:linear-gradient(160deg,#17140f,#0e0d0c);box-shadow:0 25px 90px #000}.written-read-card h2{margin:0 45px 14px 0;color:#e9d4a7;font:700 20px 'IM Fell English',Georgia,serif}.written-read-close{position:absolute;right:14px;top:12px;border:1px solid #59482f;background:#211a12;color:#ecdcb9;border-radius:7px;padding:7px 10px;cursor:pointer}.written-paper-reading{width:100%;min-height:140px;max-height:55vh;overflow:auto;padding:20px;}.written-paper-copy{position:relative;z-index:1;white-space:pre-wrap;overflow-wrap:anywhere;font:clamp(17px,2.7vw,24px)/1.7 'IM Fell English',Georgia,serif;letter-spacing:.25px;color:#352719}.written-paper-art{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:2;pointer-events:none}.written-paper-reading:has(.written-paper-art){padding:clamp(20px,5vw,48px)}
+</style>
+<style id="written-editor-preview">.written-item-editor .written-paper{aspect-ratio:900/560}.written-editor-copy{position:absolute;inset:0;z-index:1;overflow:hidden;padding:5%;white-space:pre-wrap;overflow-wrap:anywhere;color:#352719;font:clamp(14px,2vw,21px)/1.6 'IM Fell English',Georgia,serif}.written-item-editor .written-paper-canvas{position:absolute;inset:0;z-index:2;height:100%;aspect-ratio:auto}</style>
 <style id="interactive-party-map">
 .map-image-controls{align-items:end}.map-image-controls label{display:grid;gap:5px;flex:1;max-width:680px;font:11px Arial;color:var(--muted)}.map-image-controls input{width:100%;background:#0a0b0f;color:#f2ece5;border:1px solid #37313a;border-radius:7px;padding:10px;font:12px Arial}.map-image-controls input[type=file]::file-selector-button{border:1px solid #5c313b;background:#22131a;color:#fff;padding:7px 9px;border-radius:6px;margin-right:8px;cursor:pointer}
 .map .loc{touch-action:none}.map .loc.map-draggable{cursor:grab}.map .loc.map-draggable:active{cursor:grabbing}.map-token{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#171019;border:2px solid #d8b469;box-shadow:0 4px 18px #000b;color:#fff;font:900 22px Arial;cursor:grab;touch-action:none;user-select:none}.map-token:active{cursor:grabbing;transform:translate(-50%,-50%) scale(1.12)}.map-token small{position:absolute;left:50%;top:calc(100% + 3px);transform:translateX(-50%);white-space:nowrap;background:#0a0b0fdd;border:1px solid #40333b;border-radius:5px;padding:3px 6px;color:#fff;font:700 10px Arial}.map-token.not-mine{border-color:#8c6975;cursor:default}.map.phone-map-board{height:auto;flex:1;min-height:0;margin:0}.player-dashboard-actions{display:flex;align-items:center;gap:14px}.player-map-screen{display:none;position:absolute;inset:0;z-index:50;background:#07080b;padding:12px 18px 18px;flex-direction:column;gap:10px}.player-map-screen header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:0 0 auto}.player-map-screen .player-dashboard-brand{font:800 13px Arial;letter-spacing:3px;color:#ed6272}.player-map-screen .player-dashboard-sub{font:10px Arial;color:#827a83;letter-spacing:1.5px;margin-top:6px}.player-map-open>.player-dashboard-head,.player-map-open>.player-dashboard-grid{display:none!important}.player-map-open>#playerMapView{display:flex!important}body.player-window #presentation.player-map-open #playerMapView{display:flex!important}.player-map-open #playerMapView .map{width:100%}@media(max-width:700px){.player-map-screen{padding:12px}.player-map-screen header{align-items:flex-start}.player-map-screen .btn{font-size:11px;padding:8px}}
@@ -712,7 +720,14 @@ body.player-window.player-boss-active #presentation > .player-dashboard-grid{dis
           </div>
         </label>
         <label>Quantity<input id="inventoryQty" type="number" min="1" max="999" value="1"></label>
+        <label>Item type<select id="inventoryItemType" onchange="toggleWrittenItemEditor(this.value)"><option value="standard">Regular item</option><option value="written">Written lore / note</option></select></label>
         <label>Description<input id="inventoryDesc" placeholder="Short description for the players"></label>
+      </div>
+      <div class="written-item-editor" id="writtenItemEditor">
+        <div class="written-editor-title">WRITE ON THE PAPER</div>
+        <textarea id="inventoryWrittenText" maxlength="5000" placeholder="The faded ink reads…"></textarea>
+        <div class="written-paper-tools"><label>Ink <input id="inventoryInkColor" type="color" value="#352719"></label><button class="written-paper-clear" type="button" onclick="clearWrittenPaper()">Clear drawing</button><span class="written-paper-note">Draw with a mouse, finger, or stylus.</span></div>
+        <div class="written-paper"><div id="writtenPaperPreview" class="written-editor-copy"></div><canvas id="inventoryPaperCanvas" class="written-paper-canvas" width="900" height="560" aria-label="Draw on the lore paper"></canvas></div>
       </div>
       <div class="row"><button class="btn" onclick="addInventoryItem()">＋ Add To Inventory</button></div>
     </div>
@@ -895,6 +910,8 @@ body.player-window.player-boss-active #presentation > .player-dashboard-grid{dis
 
 <div class="modal" id="npcModal" style="display:none;position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.75);align-items:center;justify-content:center"><div class="panel" style="width:min(500px,92vw)"><h3>Add NPC</h3><div class="muted">Name</div><input id="npcName" style="width:100%;margin-top:5px;background:#0b0c10;border:1px solid var(--line);color:#fff;padding:10px;border-radius:7px"><div class="muted" style="margin-top:10px">Description</div><textarea id="npcDesc" style="width:100%;height:90px;margin-top:5px;background:#0b0c10;border:1px solid var(--line);color:#fff;padding:10px;border-radius:7px"></textarea><div class="muted" style="margin-top:10px">Icon</div><input id="npcIcon" value="🧙" style="width:100%;margin-top:5px;background:#0b0c10;border:1px solid var(--line);color:#fff;padding:10px;border-radius:7px"><div class="row" style="justify-content:flex-end"><button class="btn secondary" onclick="closeNPC()">Cancel</button><button class="btn" onclick="addNPC()">Add NPC</button></div></div></div>
 
+<div id="writtenItemModal" class="written-read-modal" onclick="if(event.target===this)closeWrittenItem()"><article class="written-read-card"><button class="written-read-close" onclick="closeWrittenItem()">Close</button><h2 id="writtenReadTitle"></h2><div class="written-paper written-paper-reading"><div id="writtenReadText" class="written-paper-copy"></div><img id="writtenReadDrawing" class="written-paper-art" alt="Drawing on the paper" hidden></div></article></div>
+
 <div class="party-modal" id="storyModal" aria-hidden="true">
   <div class="party-modal-card character-sheet-modal">
     <h3 id="storyModalTitle">Story Editor</h3>
@@ -980,6 +997,23 @@ body.player-window.player-boss-active #presentation > .player-dashboard-grid{dis
 </div>
 
 <script>
+function showAppNotice(message){
+  let toast=document.getElementById('appNotice');
+  if(!toast){toast=document.createElement('div');toast.id='appNotice';toast.className='app-notice';toast.setAttribute('role','status');toast.setAttribute('aria-live','polite');document.body.appendChild(toast)}
+  toast.textContent=String(message||'');toast.classList.add('visible');clearTimeout(showAppNotice.timer);showAppNotice.timer=setTimeout(()=>toast.classList.remove('visible'),3200);
+}
+function appConfirm(message){
+  return new Promise(resolve=>{
+    let modal=document.getElementById('appConfirm');
+    if(!modal){modal=document.createElement('div');modal.id='appConfirm';modal.className='app-confirm-backdrop';modal.innerHTML='<section class="app-confirm-card" role="dialog" aria-modal="true" aria-labelledby="appConfirmMessage"><p id="appConfirmMessage"></p><div class="app-confirm-actions"><button type="button" class="app-confirm-cancel">Cancel</button><button type="button" class="app-confirm-ok">Continue</button></div></section>';document.body.appendChild(modal)}
+    const finish=value=>{modal.classList.remove('visible');modal.removeEventListener('click',outside);document.removeEventListener('keydown',escape);resolve(value)};
+    const outside=e=>{if(e.target===modal)finish(false)};
+    const escape=e=>{if(e.key==='Escape')finish(false)};
+    modal.querySelector('#appConfirmMessage').textContent=String(message||'Are you sure?');
+    modal.querySelector('.app-confirm-cancel').onclick=()=>finish(false);modal.querySelector('.app-confirm-ok').onclick=()=>finish(true);
+    modal.addEventListener('click',outside);document.addEventListener('keydown',escape);modal.classList.add('visible');modal.querySelector('.app-confirm-cancel').focus();
+  });
+}
 const ROOM_CONFIG_KEY='hawkinsSupabaseConfig';
 const DEFAULT_ROOM_CONFIG={url:'https://wcujtlilexrhqevcwuzw.supabase.co',key:'sb_publishable_xJ_rpTKvPiS-B6lodoS0Ew_yKE9_4_0'};
 let roomClient=null,onlineRoomCode='',roomChannel=null,roomPushTimer=null,roomIsPhone=false,roomIsLobby=false,pendingRoomCode='',pendingRoomState=null,playerCharacterId=localStorage.getItem('hawkinsCharacterId')||'';
@@ -989,7 +1023,7 @@ function openRoomSettings(){const cfg=roomConfig();const u=document.getElementBy
 function closeRoomModal(){const m=document.getElementById('supabaseRoomModal');m.classList.remove('show');m.setAttribute('aria-hidden','true')}
 function saveSupabaseConfig(){const url=document.getElementById('sbProjectUrl').value.trim().replace(/\/$/,''),key=document.getElementById('sbPublishableKey').value.trim();if(!/^https:\/\//i.test(url)||!key)return setRoomStatus('Enter a valid https project URL and publishable/anon key.');localStorage.setItem(ROOM_CONFIG_KEY,JSON.stringify({url,key}));roomClient=null;setRoomStatus('Connection saved. Create a room to start sharing.')}
 function getRoomClient(){if(roomClient)return roomClient;let cfg=roomConfig();const q=new URLSearchParams(location.search);if(q.get('sburl')&&q.get('sbkey')){cfg={url:q.get('sburl'),key:q.get('sbkey')};localStorage.setItem(ROOM_CONFIG_KEY,JSON.stringify(cfg))}if(!cfg.url||!cfg.key)throw Error('Add your Supabase project URL and publishable key in Connection settings.');if(!window.supabase?.createClient)throw Error('Supabase client did not load. Check your internet connection and reload.');roomClient=window.supabase.createClient(cfg.url,cfg.key);return roomClient}
-function roomSnapshot(){return {chapter:chapter,revealed:revealed.slice(),mapLinks:mapLinks,party:partyState.map(x=>({id:x.id,hp:x.hp,max:x.max,shield:x.shield,active:x.active,name:x.name,icon:x.icon})),inventory:inventoryState.map(x=>({id:x.id,name:x.name,icon:x.icon,qty:x.qty,desc:x.desc||'',ownerId:x.ownerId||'party'})),mapBoard:mapBoardState(),boss:{name:boss.name,hp:boss.hp,max:boss.max,sprite:boss.sprite||'👹',active:!!boss.active,attacks:Array.isArray(boss.attacks)?boss.attacks:[]},battle:Object.assign({},battleState)}}
+function roomSnapshot(){return {chapter:chapter,revealed:revealed.slice(),mapLinks:mapLinks,party:partyState.map(x=>({id:x.id,hp:x.hp,max:x.max,shield:x.shield,active:x.active,name:x.name,icon:x.icon})),inventory:inventoryState.map(x=>({id:x.id,name:x.name,icon:x.icon,qty:x.qty,desc:x.desc||'',ownerId:x.ownerId||'party',written:!!x.written,writtenText:x.writtenText||'',writtenDrawing:x.writtenDrawing||''})),mapBoard:mapBoardState(),boss:{name:boss.name,hp:boss.hp,max:boss.max,sprite:boss.sprite||'👹',active:!!boss.active,attacks:Array.isArray(boss.attacks)?boss.attacks:[]},battle:Object.assign({},battleState)}}
 function mergeRoomPartyState(roomParty){const previous=partyState;return roomParty.map(raw=>{const old=previous.find(c=>c.id===raw.id)||{};const merged=Object.assign({},old,raw);['role','age','appearance','personality','backstory','abilities','equipment','notes','attacks'].forEach(key=>{if(!Object.prototype.hasOwnProperty.call(raw,key)&&Object.prototype.hasOwnProperty.call(old,key))merged[key]=old[key]});return normalizePartyMember(merged)})}
 let phoneDamageBurst=0,phoneDamageBurstTimer=null,phoneDamageFxTimer=null;
 function showPhoneDamage(amount,characterName){const hit=Math.max(0,Math.round(Number(amount)||0));if(!hit)return;if(!phoneDamageBurstTimer)phoneDamageBurst=0;phoneDamageBurst+=hit;clearTimeout(phoneDamageBurstTimer);phoneDamageBurstTimer=setTimeout(()=>{phoneDamageBurst=0;phoneDamageBurstTimer=null},1800);const caption=document.getElementById('damageCaption'),number=document.getElementById('damageNumber'),vignette=document.getElementById('damageVignette');if(caption){caption.textContent=(phoneDamageBurst===hit?'DM does ':'Another ')+hit+' damage to '+(characterName||'you');caption.classList.remove('show');void caption.offsetWidth;caption.classList.add('show')}if(number){number.textContent=phoneDamageBurst+' damage';number.classList.remove('show');void number.offsetWidth;number.classList.add('show')}if(vignette){vignette.classList.remove('show');void vignette.offsetWidth;vignette.classList.add('show')}clearTimeout(phoneDamageFxTimer);phoneDamageFxTimer=setTimeout(()=>{caption?.classList.remove('show');number?.classList.remove('show');vignette?.classList.remove('show')},1400);try{if(typeof navigator.vibrate==='function')navigator.vibrate([100,45,150])}catch(e){}}
@@ -1103,7 +1137,7 @@ function mapBoardState(){return {imageUrl:mapImageUrl,locations:locations.map(l=
 function saveMapBoard(){try{localStorage.setItem(MAP_BOARD_STORAGE,JSON.stringify(mapBoardState()))}catch(e){}renderMap('mapStage');if(document.getElementById('playerMapView')?.classList.contains('show'))renderMap('phoneMapBoard',true)}
 function mapPhotoStatus(t){const el=document.getElementById('mapImageStatus');if(el)el.textContent=t}
 async function handleMapImageFile(file){if(!file)return;if(!file.type.startsWith('image/'))return mapPhotoStatus('Choose an image file.');if(file.size>20*1024*1024)return mapPhotoStatus('That file is too large. Choose a photo under 20 MB.');mapPhotoStatus('Preparing photo…');try{const bitmap=await createImageBitmap(file);let scale=Math.min(1,1500/bitmap.width,1100/bitmap.height),blob=null;for(let attempt=0;attempt<8;attempt++){const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);const quality=Math.max(.42,.82-attempt*.055);blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));if(blob&&blob.size<=520*1024)break;scale*=.84}bitmap.close?.();if(!blob||blob.size>650*1024)throw Error('Could not compress this photo enough. Try a smaller image.');const dataUrl=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result||''));r.onerror=()=>reject(Error('Could not read photo.'));r.readAsDataURL(blob)});if(!mapImageIsAllowed(dataUrl))throw Error('This photo is too large to share.');mapImageUrl=dataUrl;const urlInput=document.getElementById('mapImageUrl');if(urlInput)urlInput.value='';saveMapBoard();syncPlayerWindow();mapPhotoStatus('Photo ready and shared with the room ('+Math.round(blob.size/1024)+' KB).');addLog('Updated the shared map photo.')}catch(e){mapPhotoStatus(e.message||'Could not load that photo. Try another image format.')}}
-function saveMapImageUrl(){const input=document.getElementById('mapImageUrl'),value=(input?.value||'').trim();if(!mapImageIsAllowed(value))return alert('Use a public HTTPS image URL.');mapImageUrl=value;saveMapBoard();syncPlayerWindow();mapPhotoStatus(value?'Map image URL saved.':'Map background cleared.');addLog(value?'Updated the shared map image.':'Cleared the shared map image.')}
+function saveMapImageUrl(){const input=document.getElementById('mapImageUrl'),value=(input?.value||'').trim();if(!mapImageIsAllowed(value))return showAppNotice('Use a public HTTPS image URL.');mapImageUrl=value;saveMapBoard();syncPlayerWindow();mapPhotoStatus(value?'Map image URL saved.':'Map background cleared.');addLog(value?'Updated the shared map image.':'Cleared the shared map image.')}
 function clearMapImage(){mapImageUrl='';const urlInput=document.getElementById('mapImageUrl'),fileInput=document.getElementById('mapImageFile');if(urlInput)urlInput.value='';if(fileInput)fileInput.value='';saveMapBoard();syncPlayerWindow();mapPhotoStatus('Map photo cleared.');addLog('Cleared the shared map image.')}
 function openPlayerMap(){const p=document.getElementById('presentation');if(!p)return;p.classList.add('player-map-open');const v=document.getElementById('playerMapView');if(v)v.classList.add('show');renderMap('phoneMapBoard',true)}
 function closePlayerMap(){const p=document.getElementById('presentation');if(p)p.classList.remove('player-map-open');const v=document.getElementById('playerMapView');if(v)v.classList.remove('show')}
@@ -1122,7 +1156,7 @@ function populateMapEditor(){const ss=document.getElementById('mapEditorSeason')
 function mapEditorSeasonChanged(){const ss=document.getElementById('mapEditorSeason'),cs=document.getElementById('mapEditorChapter');if(!ss||!cs)return;const sn=Number(ss.value)||1;const items=getStoryItems().filter(x=>x.season===sn);cs.innerHTML=items.map(x=>'<option value="'+x.index+'">Chapter '+(x.index+1)+' — '+esc(x.story.title)+'</option>').join('');const wanted=items.find(x=>x.index===chapter)||items[0];if(wanted){cs.value=String(wanted.index);loadMapEditorChapter()}else{document.getElementById('mapEditorLocations').innerHTML=''}}
 function loadMapEditorChapter(){const cs=document.getElementById('mapEditorChapter'),box=document.getElementById('mapEditorLocations');if(!cs||!box)return;const i=Number(cs.value);if(!Number.isInteger(i))return;const linked=linkedLocationsForChapter(i);box.innerHTML=locations.map((l,n)=>'<div class="map-link-item '+(linked.has(n)?'linked':'')+'"><div class="map-link-name">'+l[4]+' '+esc(l[0])+'<small>'+(linked.has(n)?'Linked to Chapter '+(i+1):'Not linked')+'</small></div><button class="map-link-toggle" onclick="toggleChapterMapLink('+i+','+n+')">'+(linked.has(n)?'LINKED':'LINK')+'</button></div>').join('')}
 function toggleChapterMapLink(i,n){const arr=Array.isArray(mapLinks[i])?mapLinks[i].map(Number):[];const idx=arr.indexOf(n);if(idx>=0)arr.splice(idx,1);else arr.push(n);arr.sort((a,b)=>a-b);mapLinks[i]=arr;saveMapLinks()}
-function resetMapLinks(){if(!confirm('Reset all chapter map links to the default locations?'))return;mapLinks=defaultMapLinks();saveMapLinks()}
+async function resetMapLinks(){if(!await appConfirm('Reset all chapter map links to the default locations?'))return;mapLinks=defaultMapLinks();saveMapLinks()}
 
 const npcs=[['Will','VC259','🧒','Real World'],['Will - Upside Down','VC260','👤','Upside Down'],['Dustin','VC261','🧢','Real World'],['Dustin - Upside Down','VC262','🎲','Upside Down'],['Hopper','VC263','🤠','Real World'],['Hopper - Upside Down','VC264','🕵️','Upside Down'],['Max','VC265','🎧','Real World'],['Max - Upside Down','VC266','💿','Upside Down'],['Steve','VC267','🕶️','Real World'],['Steve - Upside Down','VC268','🧟','Upside Down'],['Eleven','VC269','🧠','Real World'],['Demogorgon','VC271','👹','Monster'],['Lucas','VC273','🏹','Real World'],['Mike','VC274','📻','Real World'],['Eddie','VCidk','🎸','Real World']];
 let chapter=Number(localStorage.getItem('dndChapter')||0),part=Number(localStorage.getItem('dndPart')||0),revealed=JSON.parse(localStorage.getItem('dndRevealed')||'null')||[true,false,false,false,false,false,false,false,false,false],custom=JSON.parse(localStorage.getItem('dndCustomNPCs')||'[]');
@@ -1146,10 +1180,10 @@ function renderNPCs(){
 }
 window.renderNPCs=renderNPCs;
 function removeNpc(btn){btn?.closest('.npc')?.remove()}
-function removeCustom(i){
+async function removeCustom(i){
   if(!Number.isInteger(i)||i<0||i>=custom.length)return;
   const name=custom[i]?.name||'Custom NPC';
-  if(!confirm('Remove '+name+'?'))return;
+  if(!await appConfirm('Remove '+name+'?'))return;
   custom.splice(i,1);
   save();
   renderNPCs();
@@ -1169,7 +1203,7 @@ function closeNPC(){
 }
 function addNPC(){
   const name=document.getElementById('npcName')?.value.trim();
-  if(!name){alert('Enter a name.');return}
+  if(!name){showAppNotice('Enter a name.');return}
   custom.push({
     name,
     desc:document.getElementById('npcDesc')?.value.trim()||'Custom NPC',
@@ -1209,7 +1243,7 @@ const INVENTORY_DEFAULT=[
   {id:'unknown-key',name:'Unknown Key',icon:'🗝️',qty:1,desc:'Its lock has not been found yet.'},
   {id:'research-file',name:'Research File',icon:'📄',qty:1,desc:'Evidence from Hawkins Lab.'}
 ];
-function normalizeInventoryItem(x){return {id:String(x?.id||('item-'+Date.now()+'-'+Math.random().toString(16).slice(2))),name:String(x?.name||'Item').trim()||'Item',icon:String(x?.icon||'🎒').trim()||'🎒',qty:Math.max(1,Math.min(999,Number(x?.qty)||1)),desc:String(x?.desc||'').trim(),ownerId:String(x?.ownerId||'party')}}
+function normalizeInventoryItem(x){const drawing=String(x?.writtenDrawing||'');return {id:String(x?.id||('item-'+Date.now()+'-'+Math.random().toString(16).slice(2))),name:String(x?.name||'Item').trim()||'Item',icon:String(x?.icon||'🎒').trim()||'🎒',qty:Math.max(1,Math.min(999,Number(x?.qty)||1)),desc:String(x?.desc||'').trim(),ownerId:String(x?.ownerId||'party'),written:!!x?.written,writtenText:String(x?.writtenText||'').slice(0,5000),writtenDrawing:/^data:image\/png;base64,[a-z0-9+/=]+$/i.test(drawing)&&drawing.length<=750000?drawing:''}}
 function loadInventory(){try{const raw=localStorage.getItem(INVENTORY_STORAGE);if(raw!==null){const d=JSON.parse(raw);if(Array.isArray(d))return d.map(normalizeInventoryItem)}}catch(e){}const d=INVENTORY_DEFAULT.map(normalizeInventoryItem);try{localStorage.setItem(INVENTORY_STORAGE,JSON.stringify(d))}catch(e){}return d}
 let inventoryState=loadInventory();
 function saveInventory(){inventoryState=inventoryState.map(normalizeInventoryItem);try{localStorage.setItem(INVENTORY_STORAGE,JSON.stringify(inventoryState))}catch(e){}renderInventory();renderPlayerInventory();syncPlayerWindow()}
@@ -1219,13 +1253,20 @@ function toggleInventoryIconPicker(){const g=document.getElementById('inventoryI
 function chooseInventoryIcon(icon){const input=document.getElementById('inventoryIcon'),preview=document.getElementById('inventoryIconPreview');if(input)input.value=icon;if(preview)preview.textContent=icon;const g=document.getElementById('inventoryIconGrid');if(g)g.style.display='none';}
 document.addEventListener('click',e=>{const picker=e.target.closest?.('.inventory-icon-picker');const grid=e.target.closest?.('#inventoryIconGrid');if(!picker&&!grid){const g=document.getElementById('inventoryIconGrid');if(g)g.style.display='none';}});
 
-function addInventoryItem(){const name=document.getElementById('inventoryName')?.value.trim();if(!name)return alert('Enter an item name.');const ownerId=document.getElementById('inventoryOwner')?.value||'party';const owner=ownerId==='party'?'party stash':(partyState.find(c=>c.id===ownerId)?.name||'player inventory');const icon=document.getElementById('inventoryIcon')?.value.trim()||'🎒';const qty=Math.max(1,Math.min(999,Number(document.getElementById('inventoryQty')?.value)||1));const desc=document.getElementById('inventoryDesc')?.value.trim()||'';const same=inventoryState.find(x=>x.ownerId===ownerId&&x.name.toLowerCase()===name.toLowerCase()&&x.icon===icon);if(same){same.qty=Math.min(999,same.qty+qty);same.desc=desc||same.desc}else inventoryState.push({id:'item-'+Date.now(),ownerId,name,icon,qty,desc});saveInventory();addLog('Added '+name+' ×'+qty+' to '+owner+'.');document.getElementById('inventoryName').value='';document.getElementById('inventoryIcon').value='🎒';const iconPreview=document.getElementById('inventoryIconPreview');if(iconPreview)iconPreview.textContent='🎒';document.getElementById('inventoryQty').value='1';document.getElementById('inventoryDesc').value=''}
+function toggleWrittenItemEditor(type){document.getElementById('writtenItemEditor')?.classList.toggle('show',type==='written');if(type==='written')initWrittenPaperCanvas()}
+let paperDrawing=false,paperLastPoint=null;
+function initWrittenPaperCanvas(){const canvas=document.getElementById('inventoryPaperCanvas');const textInput=document.getElementById('inventoryWrittenText'),preview=document.getElementById('writtenPaperPreview');if(textInput&&preview&&textInput.dataset.previewBound!=='1'){textInput.addEventListener('input',()=>{preview.textContent=textInput.value});textInput.dataset.previewBound='1'}if(!canvas||canvas.dataset.ready==='1')return;const ctx=canvas.getContext('2d');const point=e=>{const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)/r.width*canvas.width,y:(e.clientY-r.top)/r.height*canvas.height}};canvas.addEventListener('pointerdown',e=>{e.preventDefault();paperDrawing=true;paperLastPoint=point(e);canvas.setPointerCapture?.(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!paperDrawing)return;e.preventDefault();const p=point(e);ctx.beginPath();ctx.moveTo(paperLastPoint.x,paperLastPoint.y);ctx.lineTo(p.x,p.y);ctx.strokeStyle=document.getElementById('inventoryInkColor')?.value||'#352719';ctx.lineWidth=Math.max(2,4*canvas.width/canvas.getBoundingClientRect().width);ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();paperLastPoint=p;canvas.dataset.hasInk='1'});const stop=()=>{paperDrawing=false;paperLastPoint=null};canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);canvas.dataset.ready='1'}
+function clearWrittenPaper(){const canvas=document.getElementById('inventoryPaperCanvas');if(!canvas)return;canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);delete canvas.dataset.hasInk}
+function resetWrittenItemForm(){const type=document.getElementById('inventoryItemType'),text=document.getElementById('inventoryWrittenText'),preview=document.getElementById('writtenPaperPreview');if(type)type.value='standard';if(text)text.value='';if(preview)preview.textContent='';toggleWrittenItemEditor('standard');clearWrittenPaper()}
+function addInventoryItem(){const name=document.getElementById('inventoryName')?.value.trim();if(!name)return showAppNotice('Enter an item name.');const ownerId=document.getElementById('inventoryOwner')?.value||'party';const owner=ownerId==='party'?'party stash':(partyState.find(c=>c.id===ownerId)?.name||'player inventory');const icon=document.getElementById('inventoryIcon')?.value.trim()||'🎒';const qty=Math.max(1,Math.min(999,Number(document.getElementById('inventoryQty')?.value)||1));const desc=document.getElementById('inventoryDesc')?.value.trim()||'';const written=document.getElementById('inventoryItemType')?.value==='written';const writtenText=document.getElementById('inventoryWrittenText')?.value.trim()||'';const canvas=document.getElementById('inventoryPaperCanvas'),writtenDrawing=canvas?.dataset.hasInk==='1'?canvas.toDataURL('image/png'):'';if(written&&!writtenText&&!writtenDrawing)return showAppNotice('Write something or draw on the paper first.');const same=written?null:inventoryState.find(x=>!x.written&&x.ownerId===ownerId&&x.name.toLowerCase()===name.toLowerCase()&&x.icon===icon);if(same){same.qty=Math.min(999,same.qty+qty);same.desc=desc||same.desc}else inventoryState.push({id:'item-'+Date.now()+'-'+Math.random().toString(16).slice(2),ownerId,name,icon,qty,desc,written,writtenText,writtenDrawing});saveInventory();addLog('Added '+name+' ×'+qty+' to '+owner+'.');document.getElementById('inventoryName').value='';document.getElementById('inventoryIcon').value='🎒';const iconPreview=document.getElementById('inventoryIconPreview');if(iconPreview)iconPreview.textContent='🎒';document.getElementById('inventoryQty').value='1';document.getElementById('inventoryDesc').value='';resetWrittenItemForm()}
 function changeInventoryQty(id,delta){const item=inventoryState.find(x=>x.id===id);if(!item)return;item.qty=Math.max(1,Math.min(999,item.qty+delta));saveInventory()}
-function deleteInventoryItem(id){const item=inventoryState.find(x=>x.id===id);if(!item)return;if(!confirm('Remove '+item.name+' from the party inventory?'))return;inventoryState=inventoryState.filter(x=>x.id!==id);saveInventory();addLog('Removed '+item.name+' from the party inventory.')}
+async function deleteInventoryItem(id){const item=inventoryState.find(x=>x.id===id);if(!item)return;if(!await appConfirm('Remove '+item.name+' from the party inventory?'))return;inventoryState=inventoryState.filter(x=>x.id!==id);saveInventory();addLog('Removed '+item.name+' from the party inventory.')}
 function renderInventoryOwnerOptions(){const sel=document.getElementById('inventoryOwner');if(!sel)return;const keep=sel.value||'party';sel.innerHTML='<option value="party">Party stash</option>'+partyState.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>').join('');sel.value=[...sel.options].some(o=>o.value===keep)?keep:'party'}
 function selectInventoryOwner(id){const sel=document.getElementById('inventoryOwner');if(sel)sel.value=id;renderInventory()}
-function renderInventory(){const el=document.getElementById('inventoryList');if(!el)return;const owner=document.getElementById('inventoryOwner')?.value||'party',items=inventoryState.filter(i=>(i.ownerId||'party')===owner);if(!items.length){el.innerHTML='<div class="panel muted">No items in this inventory yet.</div>';return}el.innerHTML=items.map(i=>`<article class="inventory-item-card"><div class="inventory-item-top"><span class="inventory-item-icon">${esc(i.icon)}</span><span class="inventory-item-name">${esc(i.name)}</span><span class="inventory-item-qty">×${i.qty}</span></div><div class="inventory-item-desc">${esc(i.desc||'No description.')}</div><div class="inventory-item-actions"><button class="btn secondary" onclick="changeInventoryQty('${i.id}',1)">＋1</button><button class="btn secondary" onclick="changeInventoryQty('${i.id}',-1)">−1</button><button class="btn secondary" onclick="deleteInventoryItem('${i.id}')">Delete</button></div></article>`).join('')}
-function renderPlayerInventory(){const el=document.getElementById('playerInventory');if(!el)return;const items=inventoryState.filter(i=>(i.ownerId||'party')===playerCharacterId);if(!items.length){el.innerHTML='<div class="player-empty">No items assigned to this character yet.</div>';return}el.innerHTML=items.map(i=>`<article class="player-inventory-card"><div class="player-inventory-icon">${esc(i.icon)}</div><div><div class="player-inventory-name">${esc(i.name)}</div><div class="player-inventory-desc">${esc(i.desc||'')}</div></div><div class="player-inventory-qty">×${i.qty}</div></article>`).join('')}
+function renderInventory(){const el=document.getElementById('inventoryList');if(!el)return;const owner=document.getElementById('inventoryOwner')?.value||'party',items=inventoryState.filter(i=>(i.ownerId||'party')===owner);if(!items.length){el.innerHTML='<div class="panel muted">No items in this inventory yet.</div>';return}el.innerHTML=items.map(i=>`<article class="inventory-item-card"><div class="inventory-item-top"><span class="inventory-item-icon">${esc(i.icon)}</span><span class="inventory-item-name">${esc(i.name)}</span><span class="inventory-item-qty">×${i.qty}</span></div>${i.written?'<span class="written-item-label">WRITTEN LORE</span>':''}<div class="inventory-item-desc">${esc(i.desc|| (i.written?'Contains a written note.':'No description.'))}</div><div class="inventory-item-actions"><button class="btn secondary" onclick="changeInventoryQty('${esc(i.id)}',1)">＋1</button><button class="btn secondary" onclick="changeInventoryQty('${esc(i.id)}',-1)">−1</button><button class="btn secondary" onclick="deleteInventoryItem('${esc(i.id)}')">Delete</button></div></article>`).join('')}
+function renderPlayerInventory(){const el=document.getElementById('playerInventory');if(!el)return;const items=inventoryState.filter(i=>(i.ownerId||'party')===playerCharacterId);if(!items.length){el.innerHTML='<div class="player-empty">No items assigned to this character yet.</div>';return}el.innerHTML=items.map(i=>`<article class="player-inventory-card ${i.written?'written-item':''}"><div class="player-inventory-icon">${esc(i.icon)}</div><div><div class="player-inventory-name">${esc(i.name)}${i.written?'<span class="written-item-label"> NOTE</span>':''}</div><div class="player-inventory-desc">${esc(i.desc|| (i.written?'Open to read.':''))}</div>${i.written?`<button class="written-read-button" onclick="openWrittenItem('${esc(i.id)}')">📜 Read paper</button>`:''}</div><div class="player-inventory-qty">×${i.qty}</div></article>`).join('')}
+function openWrittenItem(id){const item=inventoryState.find(i=>String(i.id)===String(id)&&i.written);if(!item)return;const title=document.getElementById('writtenReadTitle'),text=document.getElementById('writtenReadText'),drawing=document.getElementById('writtenReadDrawing'),modal=document.getElementById('writtenItemModal');if(title)title.textContent=item.icon+' '+item.name;if(text)text.textContent=item.writtenText||'';if(drawing){drawing.hidden=!item.writtenDrawing;if(item.writtenDrawing)drawing.src=item.writtenDrawing;else drawing.removeAttribute('src')}modal?.classList.add('show')}
+function closeWrittenItem(){document.getElementById('writtenItemModal')?.classList.remove('show')}
 
 function normalizePartyMember(c){
   const max=Math.max(1,Number(c.max)||1);
@@ -1285,7 +1326,7 @@ function damageParty(id,n=5){
 }
 function toggleParty(id){const c=partyState.find(x=>x.id===id);if(!c)return;c.active=!c.active;if(c.active&&c.hp<=0)c.hp=c.max;savePartyState();addLog(c.name+(c.active?' joined the party.':' was removed from the party.'));updateDeathState()}
 function resetPartyHP(){partyState.forEach(c=>{if(c.active)c.hp=c.max});savePartyState();hideDeath();addLog('Party HP restored.')}
-function resetPartyRoster(){if(!confirm('Reset the party roster to the default characters?'))return;partyState=PARTY_DEFAULT.map(x=>Object.assign({},x));savePartyState();addLog('Party roster reset.')}
+async function resetPartyRoster(){if(!await appConfirm('Reset the party roster to the default characters?'))return;partyState=PARTY_DEFAULT.map(x=>Object.assign({},x));savePartyState();addLog('Party roster reset.')}
 function renderParty(){
   const g=document.getElementById('partyGrid');
   if(!g)return;
@@ -1347,13 +1388,13 @@ function savePartyEditor(){
   const notes=document.getElementById('partyNotes').value.trim();
   const attacks=Array.from({length:10},(_,i)=>({name:(document.getElementById('partyAttack'+(i+1))?.value||'').trim(),type:document.getElementById('partyAttackType'+(i+1))?.value==='heal'?'heal':'damage',amount:Math.max(0,Math.min(9999,Number(document.getElementById('partyAttackAmount'+(i+1))?.value)||0))}));
   const id=document.getElementById('partyEditId').value;
-  if(!name)return alert('Enter a character name.');
+  if(!name)return showAppNotice('Enter a character name.');
   const profile={name,icon,max,hp,shield,role,age,appearance,personality,backstory,abilities,equipment,notes,attacks};
   if(id){const c=partyState.find(x=>x.id===id);if(!c)return;Object.assign(c,profile)}
   else{partyState.push(Object.assign({id:'custom-'+Date.now(),active:true,custom:true},profile))}
   savePartyState();closePartyEditor();addLog((id?'Updated ':'Created ')+name+' character sheet.');
 }
-function deleteParty(id){const c=partyState.find(x=>x.id===id);if(!c||!c.custom)return;if(!confirm('Delete '+c.name+' from the party roster?'))return;partyState=partyState.filter(x=>x.id!==id);savePartyState();addLog('Removed '+c.name+' from the party.')}
+async function deleteParty(id){const c=partyState.find(x=>x.id===id);if(!c||!c.custom)return;if(!await appConfirm('Delete '+c.name+' from the party roster?'))return;partyState=partyState.filter(x=>x.id!==id);savePartyState();addLog('Removed '+c.name+' from the party.')}
 function renderPlayerPartyHealth(){
  const el=document.getElementById('playerPartyHealth');if(!el)return;
  const a=isPlayerWindow()?partyState:partyState.filter(c=>c.active);
@@ -1544,8 +1585,8 @@ function addStoryChapter(){
   openStoryEditor(i);
   addLog('Created Season '+season+' • Chapter '+(i+1)+'.');
 }
-function resetCampaign(){
-  if(!confirm('Reset campaign progress? This resets chapter, map reveals, boss battle, and history. Custom NPCs, items, boss presets, and story edits stay.'))return;
+async function resetCampaign(){
+  if(!await appConfirm('Reset campaign progress? This resets chapter, map reveals, boss battle, and history. Custom NPCs, items, boss presets, and story edits stay.'))return;
   chapter=0;
   part=0;
   revealed=[true,false,false,false,false,false,false,false,false,false];
@@ -1610,12 +1651,12 @@ function nav(id,btn){
 }
 function toggleSide(){document.getElementById('sidebar').classList.toggle('collapsed')}
 function toggleReveal(i){revealed[i]=!revealed[i];save();render();updatePresentation();syncPlayerWindow()}
-function revealNext(){const i=revealed.findIndex(v=>!v);if(i<0)return alert('All locations are revealed.');revealed[i]=true;save();addLog('Revealed '+locations[i][0]);render();updatePresentation();syncPlayerWindow()}
+function revealNext(){const i=revealed.findIndex(v=>!v);if(i<0)return showAppNotice('All locations are revealed.');revealed[i]=true;save();addLog('Revealed '+locations[i][0]);render();updatePresentation();syncPlayerWindow()}
 function gotoPart(i){part=i;boss={name:'',hp:0,max:0};save();resetPlayerSpeech();render();updatePresentation();syncPlayerWindow()}
 function nextPart(){
  if(part<stories[chapter].parts.length-1){part++;boss={name:'',hp:0,max:0};save();resetPlayerSpeech();render();updatePresentation();syncPlayerWindow();return}
  if(chapter<stories.length-1){chapter++;part=0;boss={name:'',hp:0,max:0};save();resetPlayerSpeech();render();updatePresentation();syncPlayerWindow();return}
- alert('The campaign is complete.');
+ showAppNotice('The campaign is complete.');
 }
 function prevPart(){
  if(part>0){part--;boss={name:'',hp:0,max:0};save();resetPlayerSpeech();render();updatePresentation();syncPlayerWindow();return}
@@ -1624,8 +1665,8 @@ function prevPart(){
 function openBossBattleFromCampaign(){
   openBossBattleLobby();
 }
-function clearDMLog(){
-  if(!confirm('Clear the DM session log?'))return;
+async function clearDMLog(){
+  if(!await appConfirm('Clear the DM session log?'))return;
   localStorage.removeItem('dndLog');
   renderDMLog();
 }
@@ -1750,7 +1791,7 @@ function renderBossManagerList(){
   </article>`).join('');
 }
 function saveCustomBoss(){
-  const name=document.getElementById('bossSetupName')?.value.trim();if(!name)return alert('Enter a boss name.');
+  const name=document.getElementById('bossSetupName')?.value.trim();if(!name)return showAppNotice('Enter a boss name.');
   const max=Math.max(1,Math.min(9999,Number(document.getElementById('bossSetupHp')?.value)||100));
   const sprite=document.getElementById('bossSetupSprite')?.value.trim()||'👹';
   const attacks=Array.from({length:BOSS_ATTACK_SLOTS},(_,i)=>normalizeBossAttack({name:document.getElementById('bossAttackName'+(i+1))?.value,damage:document.getElementById('bossAttackDamage'+(i+1))?.value})).filter(a=>a.name);
@@ -1770,9 +1811,9 @@ function saveCustomBoss(){
   closeBossEditor();
   addLog('Saved boss: '+name+'.');
 }
-function deleteBoss(id){
+async function deleteBoss(id){
   const d=bossDefinitions().find(x=>x.id===id);if(!d)return;
-  if(!confirm('Delete '+d.name+'?'))return;
+  if(!await appConfirm('Delete '+d.name+'?'))return;
   if(d.builtIn){
     if(!deletedBosses.includes(d.id))deletedBosses.push(d.id);
     delete bossOverrides[d.id];
@@ -1793,7 +1834,7 @@ function deleteCustomBoss(id){deleteBoss(id)}
 function selectEditedBossForBattle(){
   const id=document.getElementById('bossEditorId')?.value;
   if(id)selectBossForBattle(id);
-  else alert('Save the boss first, then choose it from Campaign → Start Boss Battle.');
+  else showAppNotice('Save the boss first, then choose it from Campaign → Start Boss Battle.');
 }
 function selectBossForBattle(id){
   const d=bossDefinitions().find(x=>x.id===id);if(!d)return;
@@ -1832,7 +1873,7 @@ function closeBossBattleLobby(){
 
 function startBoss(config){
  const selected=config||{name:document.getElementById('bossSetupName')?.value.trim(),max:Number(document.getElementById('bossSetupHp')?.value)||100,sprite:document.getElementById('bossSetupSprite')?.value.trim()||'👹',attacks:[]};
- const name=String(selected.name||'').trim();if(!name)return alert('Choose a boss first.');
+ const name=String(selected.name||'').trim();if(!name)return showAppNotice('Choose a boss first.');
  const max=Math.max(1,Math.min(9999,Number(selected.max)||100));const sprite=String(selected.sprite||'👹').trim()||'👹';
  const meta=BOSS_DATA[name]||{sprite,attacks:[]};
  const attacks=Array.isArray(selected.attacks)?selected.attacks.map(normalizeBossAttack):((meta.attacks||[]).map(a=>normalizeBossAttack({name:a[0],damage:a[1]})));
@@ -2024,7 +2065,7 @@ function useDMRoll(){
   const raw=Number(input?.value);
   if(!Number.isInteger(raw)||raw<1||raw>20){
     if(input){input.focus();input.select()}
-    alert('Enter the result shown on your real D20 (1–20).');
+    showAppNotice('Enter the result shown on your real D20 (1–20).');
     return;
   }
   const roll=raw;
@@ -2126,7 +2167,7 @@ function openPlayerWindow(){
   const url=playerUrl();
   if(playerWindow&&!playerWindow.closed){playerWindow.location.href=url;playerWindow.focus();syncPlayerWindow();return}
   playerWindow=window.open(url,'HawkinsPlayerWindow','popup=yes,width=1600,height=900,resizable=yes,menubar=no,toolbar=no,location=no,status=no');
-  if(!playerWindow){alert('Allow pop-ups for this page, then click Player Window again.');return}
+  if(!playerWindow){showAppNotice('Allow pop-ups for this page, then click Player Window again.');return}
   setTimeout(()=>{try{playerWindow.focus()}catch(e){}syncPlayerWindow()},500);
 }
 
@@ -2186,7 +2227,7 @@ function sendSpeechSync(){
 }
 
 function speak(){
-  if(!('speechSynthesis' in window))return alert('Speech is not supported by this browser.');
+  if(!('speechSynthesis' in window))return showAppNotice('Speech is not supported by this browser.');
   saveSpeechSettings();
   speechSynthesis.cancel();
   const text=expandedScript();
@@ -2270,7 +2311,7 @@ function saveStoryEditor(){
 }
 function syncPlayerWindow(){
   if(isPlayerWindow())return;
-  const data={type:'hawkins-player-sync',season:Number(storyMeta.seasonFor[chapter])||1,chapter:chapter,part:part,revealed:revealed.slice(),mapLinks:mapLinks,mapBoard:mapBoardState(),boss:{name:boss.name,hp:boss.hp,max:boss.max,sprite:boss.sprite||'👹',active:!!boss.active,attacks:Array.isArray(boss.attacks)?boss.attacks:[]},battle:{side:battleState.side,turnIndex:battleState.turnIndex,lastRoll:battleState.lastRoll,lastNote:battleState.lastNote,awaitingNextTurn:!!battleState.awaitingNextTurn},battle:Object.assign({},battleState),party:partyState.map(x=>({id:x.id,hp:x.hp,max:x.max,shield:Number(x.shield)||0,active:x.active,name:x.name,icon:x.icon,custom:!!x.custom,role:x.role||'',age:x.age||'',appearance:x.appearance||'',personality:x.personality||'',backstory:x.backstory||'',abilities:x.abilities||'',equipment:x.equipment||'',notes:x.notes||'',attacks:Array.isArray(x.attacks)?x.attacks.slice(0,10):Array(10).fill('')})),inventory:inventoryState.map(x=>({id:x.id,name:x.name,icon:x.icon,qty:x.qty,desc:x.desc||''}))};
+  const data={type:'hawkins-player-sync',season:Number(storyMeta.seasonFor[chapter])||1,chapter:chapter,part:part,revealed:revealed.slice(),mapLinks:mapLinks,mapBoard:mapBoardState(),boss:{name:boss.name,hp:boss.hp,max:boss.max,sprite:boss.sprite||'👹',active:!!boss.active,attacks:Array.isArray(boss.attacks)?boss.attacks:[]},battle:{side:battleState.side,turnIndex:battleState.turnIndex,lastRoll:battleState.lastRoll,lastNote:battleState.lastNote,awaitingNextTurn:!!battleState.awaitingNextTurn},battle:Object.assign({},battleState),party:partyState.map(x=>({id:x.id,hp:x.hp,max:x.max,shield:Number(x.shield)||0,active:x.active,name:x.name,icon:x.icon,custom:!!x.custom,role:x.role||'',age:x.age||'',appearance:x.appearance||'',personality:x.personality||'',backstory:x.backstory||'',abilities:x.abilities||'',equipment:x.equipment||'',notes:x.notes||'',attacks:Array.isArray(x.attacks)?x.attacks.slice(0,10):Array(10).fill('')})),inventory:inventoryState.map(x=>({id:x.id,name:x.name,icon:x.icon,qty:x.qty,desc:x.desc||'',ownerId:x.ownerId||'party',written:!!x.written,writtenText:x.writtenText||'',writtenDrawing:x.writtenDrawing||''}))};
   try{localStorage.setItem('hawkins-player-sync',JSON.stringify(data));if(playerWindow&&!playerWindow.closed)playerWindow.postMessage(data,'*')}catch(e){}
   pushRoomSnapshot();
 }
@@ -2417,6 +2458,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(sel)sel.addEventListener('change',saveSpeechSettings);
   if('speechSynthesis'in window){speechSynthesis.onvoiceschanged=populateVoices;populateVoices()}
   initInventoryIconPicker();
+  initWrittenPaperCanvas();
   renderParty();renderInventoryOwnerOptions();renderInventory();renderPlayerInventory();renderPlayerPartyHealth();renderCampaignPlayerHealth();renderDMLog();populateBossPresets();updateDeathState();
 });
 </script>
